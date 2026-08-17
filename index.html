@@ -8,9 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        /* ==================== 
-           Reset & Base Styles 
-           ==================== */
         * { 
             margin: 0;
             padding: 0;
@@ -25,23 +22,40 @@
             position: relative;
         }
 
-        /* 🟢 ลูกเล่นใหม่: พื้นหลังเซลล์ลอย (Floating Cells) */
+        /* ตกแต่งกล่องใส่เครื่องเล่นเสียง */
+        .audio-container {
+            background: #eef5ff;
+            border-radius: 18px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,.08);
+            border: 2px solid #00b4d8;
+        }
+
+        .audio-container h3 {
+            color: #1d3557;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        audio {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 30px;
+            outline: none;
+        }
+
+        /* พื้นหลังเซลล์ลอย */
         .bg-bubbles {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; overflow: hidden;
             background: linear-gradient(to bottom right, #f5f5f5, #eef5ff);
         }
         .bg-bubbles li {
-            position: absolute;
-            list-style: none;
-            display: block;
-            width: 40px; height: 40px;
-            background-color: rgba(0, 180, 216, 0.15);
-            bottom: -160px;
-            animation: floatUp 25s infinite;
-            transition-timing-function: linear;
-            border-radius: 50%;
+            position: absolute; list-style: none; display: block;
+            width: 40px; height: 40px; background-color: rgba(0, 180, 216, 0.15);
+            bottom: -160px; animation: floatUp 25s infinite linear; border-radius: 50%;
         }
         .bg-bubbles li:nth-child(1) { left: 10%; width: 80px; height: 80px; animation-duration: 20s; }
         .bg-bubbles li:nth-child(2) { left: 20%; width: 40px; height: 40px; animation-duration: 25s; animation-delay: 2s; }
@@ -55,9 +69,6 @@
             100% { transform: translateY(-1000px) rotate(360deg); opacity: 0; }
         }
 
-        /* ==================== 
-           Animations เดิมของคุณ (สวยอยู่แล้ว)
-           ==================== */
         @keyframes introFlyToLogo {
             0% { opacity: 0; transform: scale(0.3) translateY(40px); }
             30% { opacity: 1; transform: scale(1.3) translateY(0px); }
@@ -87,32 +98,23 @@
             100% { top: 22px; opacity: 0; transform: scaleX(0.95); }
         }
 
-        /* 🟢 ลูกเล่นใหม่: Typing Effect */
         @keyframes typing { from { width: 0 } to { width: 100% } }
         @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #1d3557; } }
 
-        /* ==================== 
-           Intro Overlay 
-           ==================== */
         #intro-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: #ffffff; /* เปลี่ยนเป็นทึบช่วงแรกให้ดูลึกลับ */
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; pointer-events: none;
-            transition: opacity 0.5s ease 1.8s; /* フェードアウト */
+            background: #ffffff; display: flex; justify-content: center; align-items: center;
+            z-index: 9999; pointer-events: none; transition: opacity 0.5s ease 1.8s;
         }
         .intro-image {
             width: 120px; height: auto; opacity: 0; position: absolute;
             animation: introFlyToLogo 2.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
         }
 
-        /* ==================== 
-           Main Layout 
-           ==================== */
         .container {
             max-width: 1400px;
             margin: 25px auto 40px auto;
-            background: rgba(255, 255, 255, 0.95); /* โปร่งแสงนิดๆ ให้เห็นพื้นหลัง */
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 25px;
             padding: 40px;
@@ -120,7 +122,7 @@
             position: relative;
             overflow: hidden;
             animation: fadeInUp 0.8s ease-out forwards;
-            animation-delay: 2s; /* รอให้ intro เสร็จก่อน */
+            animation-delay: 2s;
             opacity: 0;
         }
 
@@ -135,9 +137,6 @@
             z-index: 1; filter: blur(1px); animation: naturalFlow 4.5s ease-in-out infinite 1.2s;
         }
 
-        /* ==================== 
-           Components 
-           ==================== */
         .center-img {
             display: block; margin: 0 auto; width: 100px; height: auto; opacity: 0; 
         }
@@ -150,81 +149,58 @@
             margin-bottom: 35px;
         }
 
-        /* กล่องครอบ H1 สำหรับเอฟเฟกต์พิมพ์ดีด */
-        .typewriter-box {
-            display: inline-block;
-        }
+        .typewriter-box { display: inline-block; }
 
         header h1 {
-            font-size: 45px;
-            color: #1d3557;
-            margin-bottom: 10px;
-            overflow: hidden; 
-            border-right: .15em solid #1d3557; 
-            white-space: nowrap; 
-            margin: 0 auto 10px auto;
-            letter-spacing: 2px;
-            /* อนิเมชันพิมพ์ดีด เริ่มหลังกล่องปรากฏ */
+            font-size: 45px; color: #1d3557; margin-bottom: 10px;
+            overflow: hidden; border-right: .15em solid #1d3557; white-space: nowrap; 
+            margin: 0 auto 10px auto; letter-spacing: 2px;
             animation: typing 2s steps(15, end) 2.5s forwards, blink-caret .75s step-end infinite;
-            width: 0; /* ซ่อนไว้ก่อนพิมพ์ */
+            width: 0;
         }
 
         header h2 {
-            color: #b8860b; font-size: 28px;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 4s forwards; /* ปรากฏหลังพิมพ์หัวข้อเสร็จ */
+            color: #b8860b; font-size: 28px; opacity: 0;
+            animation: fadeInUp 1s ease-out 4s forwards;
         }
 
         .main {
             display: grid; grid-template-columns: 1fr 420px 1fr; gap: 25px; align-items: center;
         }
 
-        /* 🟢 ลูกเล่นใหม่: เอฟเฟกต์การ์ด และแสงวิ่งผ่าน */
         .card {
             background: #fafafa; border-radius: 18px; padding: 20px;
             box-shadow: 0 5px 15px rgba(0,0,0,.08); margin-bottom: 20px;
             transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-            position: relative; /* สำหรับเส้นแสง */
-            overflow: hidden; /* ไม่ให้แสงล้นขอบ */
+            position: relative; overflow: hidden;
         }
 
-        /* เส้นแสง (Shine) */
         .card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
+            content: ''; position: absolute; top: 0; left: -100%;
             width: 50%; height: 100%;
             background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
-            transform: skewX(-25deg);
-            transition: all 0.75s;
-            z-index: 1;
+            transform: skewX(-25deg); transition: all 0.75s; z-index: 1;
         }
 
         .card:hover {
             transform: translateY(-10px) scale(1.03);
             box-shadow: 0 15px 30px rgba(29, 53, 87, 0.2);
-            background: #ffffff;
-            border-left: 4px solid #00b4d8; /* เส้นขอบโผล่มาตอน Hover */
+            background: #ffffff; border-left: 4px solid #00b4d8;
         }
 
-        .card:hover::before {
-            left: 125%; /* สั่งให้แสงวิ่งจากซ้ายไปขวา */
-        }
-
+        .card:hover::before { left: 125%; }
         .card h3, .card p { position: relative; z-index: 2; }
-
         .card h3 { color: #1d3557; margin-bottom: 10px; font-size: 18px; }
         .card p { font-size: 14px; line-height: 1.6; }
 
         .center { text-align: center; }
-
         .center img {
             width: 100%; border-radius: 20px; border: 6px solid #d4af37;
             transition: transform 0.5s ease, box-shadow 0.5s ease;
             animation: pulseGlow 3s infinite ease-in-out;
         }
         .center img:hover {
-            transform: scale(1.05) rotate(2deg); /* เอียงนิดๆ ตอนชี้ */
+            transform: scale(1.05) rotate(2deg);
             box-shadow: 0 0 30px rgba(212, 175, 55, 0.8);
         }
 
@@ -236,20 +212,15 @@
             border-left: 8px solid #1d3557; border-radius: 15px; padding: 25px;
             transition: all 0.3s ease;
         }
-        .summary:hover {
-            transform: translateX(10px);
-            background: #e2efff;
-        }
+        .summary:hover { transform: translateX(10px); background: #e2efff; }
         .summary h2 { color: #1d3557; margin-bottom: 10px; }
 
         .students { margin-top: 40px; }
-
         table { width: 100%; border-collapse: collapse; overflow: hidden; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         th { background: #1d3557; color: white; padding: 15px; }
         td { padding: 15px; border-bottom: 1px solid #ddd; transition: all 0.3s ease; }
-        
         tr { transition: transform 0.2s ease; }
-        tr:hover td { background: #eef5ff; color: #1d3557; font-weight: 600; padding-left: 20px; /* ลูกเล่นตารางขยับข้อความ */ }
+        tr:hover td { background: #eef5ff; color: #1d3557; font-weight: 600; padding-left: 20px; }
         tr:hover { transform: scale(1.01); }
 
         footer { text-align: center; margin-top: 30px; color: #777; transition: 0.3s; }
@@ -265,19 +236,16 @@
 
 <body>
 
-    <!-- 🟢 พื้นหลังแนววิทยาศาสตร์ -->
     <ul class="bg-bubbles">
         <li></li><li></li><li></li><li></li><li></li><li></li>
     </ul>
 
-    <!-- Intro Animation Overlay -->
     <div id="intro-overlay">
         <img src="https://cdn.phototourl.com/free/2026-08-05-a139dc7b-abf3-4021-9e7f-9f71587a5a93.png" alt="Intro Logo" class="intro-image">
     </div>
 
-    <!-- Main Content Container -->
     <div class="container">
-        <img src="https://cdn.phototourl.com/free/2026-08-05-a139dc7b-abf3-4021-9e7f-9f71587a5a93.png" class="center-img" id="main-logo" alt="logo" style="width: 80px; margin-bottom: 10px;">
+        <img src="https://cdn.phototourl.com/free/2026-08-05-a139dc7b-abf3-4021-9e7f-9f71587a5a93.png" class="center-img" id="main-logo" alt="l" style="width: 100px; margin-bottom: 10px;">
 
         <header>
             <div class="typewriter-box">
@@ -286,8 +254,16 @@
             <h2>เรื่อง พันธุกรรมและประโยชน์ของสิ่งมีชีวิตดัดแปลงพันธุกรรม</h2>
         </header>
 
+        <!-- 🎵 เครื่องเล่นเสียงบรรยาย MP3 ตามแบบที่คุณต้องการ -->
+        <div class="audio-container">
+            
+            <audio controls>
+                <source src="https://www.image2url.com/r2/default/audio/1786943112051-1e49764c-f1b0-4302-a03b-fcf5f02cb8c6.mp3" type="audio/mpeg">
+                เบราว์เซอร์ของคุณไม่รองรับการเล่นไฟล์เสียง
+            </audio>
+        </div>
+
         <div class="main">
-            <!-- คอลัมน์ซ้าย -->
             <div>
                 <div class="card">
                     <h3>1. ความหมายของพันธุกรรม & GMO</h3>
@@ -307,14 +283,12 @@
                 </div>
             </div>
 
-            <!-- คอลัมน์กลาง (รูปภาพ) -->
             <div class="center">
                 <img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?auto=format&fit=crop&w=600&q=80" alt="DNA and Genetics">
                 <h2>สิ่งมีชีวิตดัดแปลงพันธุกรรม</h2>
                 <h3>(Genetically Modified Organisms)</h3>
             </div>
 
-            <!-- คอลัมน์ขวา -->
             <div>
                 <div class="card">
                     <h3>🌎 4 มิติของการพัฒนา</h3>
@@ -336,7 +310,6 @@
             </div>
         </div>
 
-        <!-- สรุปบทเรียน -->
         <div class="summary">
             <h2>💡 สรุปบทเรียน</h2>
             <p>
@@ -344,7 +317,6 @@
             </p>
         </div>
 
-        <!-- ตารางรายชื่อ -->
         <div class="students">
             <table>
                 <tr>
@@ -352,36 +324,12 @@
                     <th>ห้อง</th>
                     <th>เลขที่</th>
                 </tr>
-                <tr>
-                    <td>นางสาวจิรนันท์ มีสุข</td>
-                    <td>SMP3-1</td>
-                    <td>5</td>
-                </tr>
-                <tr>
-                    <td>เด็กชายชลิตา มณีทิพย์</td>
-                    <td>SMP3-1</td>
-                    <td>6</td>
-                </tr>
-                <tr>
-                    <td>เด็กชายทิชากร ศรีรักษ์</td>
-                    <td>SMP3-1</td>
-                    <td>14</td>
-                </tr>
-                <tr>
-                    <td>เด็กชายโพนชัย แผนสันเทียะ</td>
-                    <td>SMP3-1</td>
-                    <td>15</td>
-                </tr>
-                <tr>
-                    <td>เด็กชายวิริยะ ภิญโญยาง</td>
-                    <td>SMP3-1</td>
-                    <td>16</td>
-                </tr>
-                <tr>
-                    <td>เด็กชายกฤษฏา ฤาชา</td>
-                    <td>SMP3-1</td>
-                    <td>31</td>
-                </tr>
+                <tr><td>นางสาวจิรนันท์ มีสุข</td><td>SMP3-1</td><td>5</td></tr>
+                <tr><td>เด็กชายชลิตา มณีทิพ</td><td>SMP3-1</td><td>6</td></tr>
+                <tr><td>เด็กชายทิชากร ศรีรักษ์</td><td>SMP3-1</td><td>14</td></tr>
+                <tr><td>เด็กชายโพนชัย แผนสันเทียะ</td><td>SMP3-1</td><td>15</td></tr>
+                <tr><td>เด็กชายวิริยะ ภิญโญยาง</td><td>SMP3-1</td><td>16</td></tr>
+                <tr><td>เด็กชายกฤษฏา ฤาชา</td><td>SMP3-1</td><td>31</td></tr>
             </table>
         </div>
 
@@ -391,12 +339,11 @@
     </div>
 
     <script>
-        // ปรับเวลาให้เข้ากับลูกเล่นใหม่
         setTimeout(() => {
             const intro = document.getElementById('intro-overlay');
             if(intro) {
-                intro.style.opacity = '0'; // เฟดหน้าขาวออก
-                setTimeout(() => intro.remove(), 500); // ลบออกจาก DOM
+                intro.style.opacity = '0';
+                setTimeout(() => intro.remove(), 500);
             }
         }, 1800);
 
